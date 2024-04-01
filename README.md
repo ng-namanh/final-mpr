@@ -1,16 +1,13 @@
-# Starter base
+## Core Package 
+- NativeWind ( TailwindCss For ReactNative )
+- Typescript
+- Zustand. Refer Docs: https://zustand-demo.pmnd.rs/
+- Firebase ( setup sau )
+- React Native Reusables. Refer Docs: https://rnr-docs.vercel.app/getting-started/introduction/
+- Icon: Lucide. Refer Docs: https://lucide.dev/icons/
+## Package Manager
+- Yarn version `1.22.19`
+- Node version `20.11.0`
+## Run
+- To run this project, first you need to clone using this command `git clone 
 
-A starting point to help you set up your project quickly and use the common components provided by `react-native-reusables`. The idea is to make it easier for you to get started.
-
-## Features
-
-- NativeWind v4
-- Dark and light mode
-    - Android Navigation Bar matches mode
-    - Persistant mode
-- Common components
-    - Icons, ThemeToggle, Avatar, Button, Card, Progress, Text, Tooltip
-
-<img src="https://github.com/mrzachnugent/react-native-reusables/assets/63797719/42c94108-38a7-498b-9c70-18640420f1bc"
-     alt="starter-base-template"
-     style="width:270px;" />
