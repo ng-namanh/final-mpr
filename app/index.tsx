@@ -1,29 +1,42 @@
-import * as React from 'react';
-import { View } from 'react-native';
-import Animated, { FadeInUp, FadeOutDown, LayoutAnimationConfig } from 'react-native-reanimated';
-import { Info } from '~/components/Icons';
-import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
-import { Button } from '~/components/ui/button';
+import { Link } from 'expo-router'
+import * as React from 'react'
+import { View } from 'react-native'
+import Animated, {
+  FadeInUp,
+  FadeOutDown,
+  LayoutAnimationConfig
+} from 'react-native-reanimated'
+import { Info } from '~/components/Icons'
+import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
+import { Button } from '~/components/ui/button'
 import {
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
-} from '~/components/ui/card';
-import { Progress } from '~/components/ui/progress';
-import { Text } from '~/components/ui/text';
-import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
+  CardTitle
+} from '~/components/ui/card'
+import { Progress } from '~/components/ui/progress'
+import { Text } from '~/components/ui/text'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger
+} from '~/components/ui/tooltip'
+import { useAuth } from '~/hooks/useAuth'
+import { getUsernameFromEmail } from '~/lib/regex'
 
 const GITHUB_AVATAR_URI =
-  'https://i.pinimg.com/originals/ef/a2/8d/efa28d18a04e7fa40ed49eeb0ab660db.jpg';
+  'https://i.pinimg.com/originals/ef/a2/8d/efa28d18a04e7fa40ed49eeb0ab660db.jpg'
 
 export default function Screen() {
-  const [progress, setProgress] = React.useState(78);
+  const { user } = useAuth()
+
+  const [progress, setProgress] = React.useState(78)
 
   function updateProgressValue() {
-    setProgress(Math.floor(Math.random() * 100));
+    setProgress(Math.floor(Math.random() * 100))
   }
   return (
     <View className='flex-1 justify-center items-center gap-5 p-6 bg-secondary/30'>
@@ -36,12 +49,20 @@ export default function Screen() {
             </AvatarFallback>
           </Avatar>
           <View className='p-3' />
-          <CardTitle className='pb-2 text-center'>Rick Sanchez</CardTitle>
+          <CardTitle className='pb-2 text-center'>
+            {user ? `Welcome ${getUsernameFromEmail(user?.email)}` : 'Hello'}
+          </CardTitle>
           <View className='flex-row'>
-            <CardDescription className='text-base font-semibold'>Scientist</CardDescription>
+            <CardDescription className='text-base font-semibold'>
+              Scientist
+            </CardDescription>
             <Tooltip delayDuration={150}>
               <TooltipTrigger className='px-2 pb-0.5 active:opacity-50'>
-                <Info size={14} strokeWidth={2.5} className='w-4 h-4 text-foreground/70' />
+                <Info
+                  size={14}
+                  strokeWidth={2.5}
+                  className='w-4 h-4 text-foreground/70'
+                />
               </TooltipTrigger>
               <TooltipContent className='py-2 px-4 shadow'>
                 <Text className='native:text-lg'>Freelance</Text>
@@ -75,11 +96,17 @@ export default function Screen() {
                 exiting={FadeOutDown}
                 className='w-11 items-center'
               >
-                <Text className='text-sm font-bold text-sky-600'>{progress}%</Text>
+                <Text className='text-sm font-bold text-sky-600'>
+                  {progress}%
+                </Text>
               </Animated.View>
             </LayoutAnimationConfig>
           </View>
-          <Progress value={progress} className='h-2' indicatorClassName='bg-sky-600' />
+          <Progress
+            value={progress}
+            className='h-2'
+            indicatorClassName='bg-sky-600'
+          />
           <View />
           <Button
             variant='outline'
@@ -88,8 +115,18 @@ export default function Screen() {
           >
             <Text>Update</Text>
           </Button>
+          <Link href='/auth/login' asChild>
+            <Button className='text-2xl w-full'>
+              <Text>Login</Text>
+            </Button>
+          </Link>
+          <Link href='/auth/register' asChild>
+            <Button className='text-2xl w-full'>
+              <Text>Register</Text>
+            </Button>
+          </Link>
         </CardFooter>
       </Card>
     </View>
-  );
+  )
 }
