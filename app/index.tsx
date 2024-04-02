@@ -1,4 +1,5 @@
 import { Link } from 'expo-router'
+import { getAuth, signOut } from 'firebase/auth'
 import * as React from 'react'
 import { View } from 'react-native'
 import Animated, {
@@ -29,6 +30,8 @@ import { getUsernameFromEmail } from '~/lib/regex'
 
 const GITHUB_AVATAR_URI =
   'https://i.pinimg.com/originals/ef/a2/8d/efa28d18a04e7fa40ed49eeb0ab660db.jpg'
+
+const auth = getAuth()
 
 export default function Screen() {
   const { user } = useAuth()
@@ -110,21 +113,29 @@ export default function Screen() {
           <View />
           <Button
             variant='outline'
-            className='shadow shadow-foreground/5'
+            className='shadow shadow-foreground/5 w-full'
             onPress={updateProgressValue}
           >
             <Text>Update</Text>
           </Button>
-          <Link href='/auth/login' asChild>
-            <Button className='text-2xl w-full'>
-              <Text>Login</Text>
+          {user ? (
+            <View className='w-full flex gap-2'>
+              <Link href='/auth/login' asChild>
+                <Button className='text-2xl w-full'>
+                  <Text>Login</Text>
+                </Button>
+              </Link>
+              <Link href='/auth/register' asChild>
+                <Button className='text-2xl w-full'>
+                  <Text>Register</Text>
+                </Button>
+              </Link>
+            </View>
+          ) : (
+            <Button className='text-2xl w-full' onPress={() => signOut(auth)}>
+              <Text>Sign out</Text>
             </Button>
-          </Link>
-          <Link href='/auth/register' asChild>
-            <Button className='text-2xl w-full'>
-              <Text>Register</Text>
-            </Button>
-          </Link>
+          )}
         </CardFooter>
       </Card>
     </View>
